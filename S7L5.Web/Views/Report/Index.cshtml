@@ -1,0 +1,34 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.Report.GenerateSalesReportVm
+
+<h1>
+    Create Sales Report
+</h1>
+<h5>
+    Complete the form to generate sales report
+</h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GeneratedSalesReport">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateFrom" class="control-label"></label>
+                <input asp-for="DateFrom" class="form-control" />
+                <span asp-validation-for="DateFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTo" class="control-label"></label>
+                <input asp-for="DateTo" class="form-control" />
+                <span asp-validation-for="DateTo" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

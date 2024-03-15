@@ -1,0 +1,53 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.UserManagment.ListRolesForListVm
+
+<h1>
+    Roles Managment
+</h1>
+
+<p>
+    <a asp-action="AddRole" class="btn btn-success">Add Role</a>
+</p>
+
+<form asp-action="GetRoles" asp-controller="UserManagment" method="post">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        NormalizedName
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Roles) 
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NormalizedName)
+                        </td>
+                        <td>
+                            <a asp-controller="UserManagment" asp-action="DeleteRole" asp-route-pizzaId="@item.Id" class="btn btn-danger">Delete</a>                           
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

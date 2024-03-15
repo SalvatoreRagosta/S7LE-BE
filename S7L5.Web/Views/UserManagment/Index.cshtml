@@ -1,0 +1,91 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.UserManagment.ListUserForListVm
+
+<h1>
+    User Managment
+</h1>
+
+@if(User.IsInRole("Admin"))
+{
+<p>
+    <a asp-action="GetRoles" class="btn btn-success">Manage Roles</a>
+</p>
+}
+
+<form asp-action="Index" asp-controller="UserManagment" method="post">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        EMail
+                    </th>
+                    <th>
+                        First Name
+                    </th>
+                    <th>
+                        Last Name
+                    </th>
+                    <th>
+                        IsActive
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td>
+                            @if (item.IsActive == false)
+                            {
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="UserManagment" asp-action="ManageUserRoles" asp-route-userId="@item.Id" class="btn btn-primary">Manage User Roles</a>
+                                    <a asp-controller="UserManagment" asp-action="GetUserDetails" asp-route-userId="@item.Id" class="btn btn-info">Details</a>                    
+                                    <a asp-controller="UserManagment" asp-action="DeleteUser" asp-route-userId="@item.Id" class="btn btn-danger">Delete User</a>
+                                    <a asp-controller="UserManagment" asp-action="RestoreUser" asp-route-userId="@item.Id" class="btn btn-success">Restore User</a>
+                                }
+                                else if(User.IsInRole("Manager"))
+                                {
+                                    <a asp-controller="UserManagment" asp-action="GetUserDetails" asp-route-userId="@item.Id" class="btn btn-info">Details</a>                    
+
+                                }
+                                
+                            }
+                            else
+                            {
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="UserManagment" asp-action="ManageUserRoles" asp-route-userId="@item.Id" class="btn btn-primary">Manage User Roles</a>
+                                    <a asp-controller="UserManagment" asp-action="GetUserDetails" asp-route-userId="@item.Id" class="btn btn-info">Details</a>                    
+                                    <a asp-controller="UserManagment" asp-action="DeleteUser" asp-route-userId="@item.Id" class="btn btn-danger">Delete User</a>
+                                }
+                                else if(User.IsInRole("Manager")) 
+                                {
+                                    <a asp-controller="UserManagment" asp-action="GetUserDetails" asp-route-userId="@item.Id" class="btn btn-info">Details</a>                    
+
+                                }
+                                
+                            }
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

@@ -1,0 +1,80 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.Pizza.PizzaForListVm
+
+<style>
+    .col1{
+        width:45%;
+        float:left;
+        margin-right:3%;
+    }
+    .col2{
+        width:45%;
+        float:left;
+        margin-right:3%;
+        text-align:center;
+    }
+    .col-sm-10{
+        text-align:center;
+    }
+</style>
+
+<div class="container">
+    <div class="col1">
+        <div>
+            <h4>@Html.DisplayFor(model => model.Name) Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Price)
+                    [$]
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.IsMeat)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.IsMeat)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Components):
+                </dt>
+                <dd class = "col-sm-10">           
+                    @foreach(var item in Model.Components)
+                    {
+                        @Html.DisplayFor(modelItem => item.Name) <br />
+                    }
+                </dd>
+            </dl>
+        </div>
+        @if(User.IsInRole("Manager"))
+        {
+            <div>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        }
+        else
+        {
+            <div>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <a asp-controller="ShoppingCart" asp-action="AddPizzaToCart" asp-route-pizzaId="@Model.Id" class="btn btn-warning">Add To Cart</a>
+            </div>
+        }
+        
+    </div>
+    <div class="col2">
+            <img id="img_logo" alt="Logo" src="@Url.Content($"~/img/Pizzas/{Model.ImgPath}")" width="350" height="350" />
+    </div>
+</div>

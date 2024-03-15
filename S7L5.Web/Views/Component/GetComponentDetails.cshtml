@@ -1,0 +1,72 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.Component.ComponentForListVm
+
+
+<style>
+    .col1{
+        width:30%;
+        float:left;
+        margin-right:3%;
+    }
+    .col2{
+        width:30%;
+        float:left;
+        margin-right:3%;
+    }
+    .col3{
+        width:30%;
+        float:left;
+        margin-right:3%;
+    }
+    .col-sm-10{
+        text-align:center;
+    }
+</style>
+
+<div class="container">
+    <div class="col1">
+        <div>
+            <h4>@Html.DisplayFor(model => model.Name) Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Price)
+                    [$]
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.IsMeat)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.IsMeat)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+    <div class="col2">
+            <img id="img_logo" alt="Logo" src="@Url.Content($"~/img/Components/{Model.ImgPath}")" width="380" height="300" />
+    </div>
+    <div class="col3">
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    </div>
+</div>

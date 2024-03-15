@@ -1,0 +1,108 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.ShoppingCart.ListShoppingCartVm
+
+<h1>
+    ShoppingCart
+</h1>
+
+@if(Model.ShoppingCartRows.Count == 0)
+{
+    <h4>
+        Your shopping cart is empty.
+        <br>
+        Go through the products menus and come back again.
+    </h4>
+}
+else
+{
+
+<form asp-action="Index" asp-controller="ShoppingCart" method="post">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Size [l]
+                    </th>
+                    <th>
+                        Count
+                    </th>
+                    <th>
+                        UnitPrice [$]
+                    </th>
+                    <th>
+                        TotalPrice [$]
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model.ShoppingCartRows) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("User"))
+                        {
+                            <a asp-controller="ShoppingCart" asp-action="DeleteProductFromCart" asp-route-recordId="@item.RecordId" class="btn btn-danger">Delete</a>
+                        }
+                    </td>
+                </tr>
+        }
+        <tr>
+            <th>
+                Summary
+            </th>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => modelItem.SummaryPrice)
+            </th>
+            <td>
+                @if (User.IsInRole("User"))
+                {
+                    <a asp-controller="ShoppingCart" asp-action="MakeOrder"  class="btn btn-success">Make Order</a>
+                }
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function PagerClick(index)
+        {
+            document.getElementById("pageNumber").value = index;
+            document.forms[0].submit();
+        }
+    </script>
+}

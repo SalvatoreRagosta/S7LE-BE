@@ -1,0 +1,108 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.Drink.ListDrinkForListVm
+
+<h1>
+    Drinks
+</h1>
+
+@if(User.IsInRole("Manager"))
+{
+<p>
+    <a asp-action="AddDrink" class="btn btn-success">Add Drink</a>
+</p>
+}
+
+<form asp-action="Index" asp-controller="Drink" method="post">
+    <p>
+        <input type="text" asp-for="FilterString" name="filterString" id="filterString" />
+        <input type="submit" class="btn-muted" value="Search"/>
+    </p>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price [$]
+                    </th>
+                    <th>
+                        Size [L]
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model.Drinks) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @if(User.IsInRole("Manager"))
+                        {
+                            <a asp-controller="Drink" asp-action="EditDrink" asp-route-drinkId="@item.Id" class="btn btn-primary">Edit</a>
+                            <a asp-controller="Drink" asp-action="GetDrinkDetails" asp-route-drinkId="@item.Id" class="btn btn-info">Details</a>
+                            <a asp-controller="Drink" asp-action="DeleteDrink" asp-route-drinkId="@item.Id" class="btn btn-danger">Delete</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Drink" asp-action="GetDrinkDetails" asp-route-drinkId="@item.Id" class="btn btn-info">Details</a>
+                            <a asp-controller="ShoppingCart" asp-action="AddDrinkToCart" asp-route-drinkId="@item.Id" class="btn btn-warning">Add To Cart</a>
+                        }
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <center>
+            <table>
+                <tr>
+                    @for (int i = 1; i <= Math.Ceiling(Model.Count / (double)Model.PageSize); i++)
+                    {
+                        <td>
+                        @if (i != Model.CurrentPage)
+                        {
+                            <a href="javascript:PagerClick(@i)">@i</a>
+                        }
+                        else
+                        {
+                            <span>@i</span>
+                        }
+                        </td> 
+                    }
+                </tr>
+            </table>
+            <input type="hidden" name="pageNumber" id="pageNumber" />
+            <input type="hidden" name="pageSize" id="pageSize" value="5" />
+        </center>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script type="text/javascript">
+            function PagerClick(index)
+            {
+                document.getElementById("pageNumber").value = index;
+                document.forms[1].submit();
+            }
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model PizzeriaImpulsMVC.Application.ViewModels.UserManagment.ListRolesForListVm
+
+<h1>
+    Manage user roles
+</h1>
+<h5>
+    Choose roles and save changes
+</h5>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ManageUserRoles">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-4">
+                @for (int i = 0; i < Model.Roles.Count; i++)
+                {  
+                    @Html.CheckBoxFor(model => Model.Roles[i].IsChecked)
+                    @Html.HiddenFor(model => Model.Roles[i].Id)
+                    @Html.HiddenFor(model => Model.UserId)
+                    @Html.DisplayFor(model => Model.Roles[i].Id) 
+                    <br />
+                }                               
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+            <br />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
